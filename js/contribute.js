@@ -129,7 +129,7 @@ cj(function($) {
         .append($('<td>')
           .append($('<span>', {
             class: 'removeAllocation crm-button',
-            click: function() {alert('remove me');},
+            click: removeAllocation,
             text: 'X'
           }))
         )
@@ -138,6 +138,24 @@ cj(function($) {
 
     // whether adding or updating the row, display the gift amount
     $('table.fund_allocations tbody tr[data-id=' + real_field + '] td.amt').text(line_item.amt_formatted);
+
+    var total = sumAllocations();
+    var formatted = fMoney(total);
+    $('table.fund_allocations tfoot th.total').text(formatted);
+  }
+
+  /**
+   * Click handler. Removes an allocation from both the display and the hidden form.
+   *
+   * @param e Click event
+   */
+  function removeAllocation(e) {
+    var row = $(e.currentTarget).closest('tr');
+
+    // unset the amount in the hidden field
+    $('#priceset-div input[name=' + row.attr('data-id') + ']').val();
+
+    row.remove();
 
     var total = sumAllocations();
     var formatted = fMoney(total);
