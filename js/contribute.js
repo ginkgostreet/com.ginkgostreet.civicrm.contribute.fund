@@ -220,9 +220,10 @@ cj(function($) {
         .append($('<td>', {class: 'amt'}))
         .append($('<td>')
           .append($('<span>', {
-            class: 'removeAllocation crm-button',
+            class: 'removeAllocation icon delete-icon',
             click: removeAllocation,
-            text: 'X'
+            style: 'cursor: pointer;',
+            title: 'Remove Contribution'
           }))
         )
       );
