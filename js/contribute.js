@@ -1,8 +1,8 @@
 cj(function($) {
   // hide the CiviCRM-generated price set
-  $("#priceset-div input[name^=price_]").closest('.crm-section').hide();
+  $("#priceset-div").hide();
 
-  $("#pricesetTotal").before('<div class="fund_container"></div>');
+  $("#priceset-div").before('<div class="fund_container"></div>');
 
   var funds = buildFundList();
   var select = buildSelectList('fund_selector', 'Select a Fund to which to Contribute', funds);
