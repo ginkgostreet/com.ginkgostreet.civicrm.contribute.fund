@@ -1,6 +1,7 @@
 <?php
 
 require_once 'fund.civix.php';
+require_once 'fund.forms.php';
 
 /**
  * Implementation of hook_civicrm_config
@@ -71,31 +72,6 @@ function fund_civicrm_disable() {
  */
 function fund_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
   return _fund_civix_civicrm_upgrade($op, $queue);
-}
-
-/**
- * Implementation of hook_civicrm_managed
- *
- * Generate a list of entities to create/deactivate/delete when this module
- * is installed, disabled, uninstalled.
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
- */
-function fund_civicrm_managed(&$entities) {
-  _fund_civix_civicrm_managed($entities);
-}
-
-/**
- * Implementation of hook_civicrm_caseTypes
- *
- * Generate a list of case-types
- *
- * Note: This hook only runs in CiviCRM 4.4+.
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
- */
-function fund_civicrm_caseTypes(&$caseTypes) {
-  _fund_civix_civicrm_caseTypes($caseTypes);
 }
 
 /**
