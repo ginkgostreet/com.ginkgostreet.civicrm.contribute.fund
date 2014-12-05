@@ -10,10 +10,55 @@ class CRM_Fund_Upgrader extends CRM_Fund_Upgrader_Base {
 
   /**
    * Example: Run an external SQL script when the module is installed
-   *
+   */
   public function install() {
-    $this->executeSqlFile('sql/myinstall.sql');
+    $this->install_price_template();
   }
+
+  /**
+   * Creates a price field in the target price set which will be used to populate
+   * the amount given to each fund.
+   */
+  private function install_price_template() {
+    $priceset_id = civicrm_api3('PriceSet', 'getvalue', array(
+      'name' => 'test', // not a great machine name, but I didn't choose it...
+      'return' => 'id',
+    ));
+
+    $pricefield = civicrm_api3('PriceField', 'create', array(
+      'html_type' => 'Radio',
+      'is_active' => 1,
+      'is_display_amounts' => 0,
+      'is_enter_qty' => 0,
+      'label' => 'Amount',
+      'name' => 'amount_template',
+      'price_set_id' => $priceset_id,
+    ));
+
+    $default_amts = array(
+      10000 => '$10,000',
+      5000 => '$5,000',
+      1000 => '$1,000',
+      500 => '$500',
+      100 => '$100',
+      25 => '$25'
+    );
+    $params = array(
+      'financial_type_id' => 1, // we don't actually use this; just need to supply a value
+      'is_active' => 1,
+      'price_field_id' => $pricefield['id'],
+      'weight' => 1,
+    );
+    foreach ($default_amts as $amt => $label) {
+      $params['amount'] = $amt;
+      $params['label'] = $label;
+      $params['name'] = 'fund_' . $amt;
+      $params['weight']++;
+
+      civicrm_api3('PriceFieldValue', 'create', $params);
+    }
+  }
+
 
   /**
    * Example: Run an external SQL script when the module is uninstalled
