@@ -1,15 +1,15 @@
 cj(function($) {
+  // create container for our custom UI and move in the amount selector
+  $("#priceset-div").before($('<div>', {class: 'fund_container'}));
+  $('.fund_container').append($('.crm-section.amount_template-section'));
+
   // hide the CiviCRM-generated price set
   $("#priceset-div").hide();
-
-  $("#priceset-div").before('<div class="fund_container"></div>');
 
   var funds = buildFundList();
   var select = buildSelectList('fund_selector', 'Select a Fund to which to Contribute', funds);
   var button = buildButton();
-  $('.fund_container').prepend(select)
-    .append($('.crm-section.amount_template-section').show())
-    .append(button);
+  $('.fund_container').prepend(select).append(button);
 
   /**
    * Parses the CiviCRM-generated price set to build a list of funds
