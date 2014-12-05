@@ -15,11 +15,20 @@ cj(function($) {
     }
   });
 
+  // build the custom UI for selecting funds
   var funds = buildFundList();
   var select = buildSelectList('fund_selector', 'Select a Fund to which to Contribute', funds);
   var button = buildButton();
   $('.fund_container').prepend(select);
   $('.fund_container .crm-section.amount_template-section').after(button);
+
+  // if the user submits the form with a ready-to-go allocation (but neglects to click the
+  // "add" button), add/update the line-item before submitting
+  $('form[name=Main]').submit(function(){
+    if ($('.amount_template-section :radio:checked').length === 1) {
+      handleAllocation();
+    }
+  });
 
   /**
    * Parses the CiviCRM-generated price set to build a list of funds
