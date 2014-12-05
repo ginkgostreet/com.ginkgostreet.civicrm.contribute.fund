@@ -3,6 +3,15 @@ cj(function($) {
   $("#priceset-div").before($('<div>', {class: 'fund_container'}));
   $('.fund_container').append($('.crm-section.amount_template-section'));
   $('.crm-section.amount_template-section input[value=0]').closest('.price-set-row').hide();
+  var selectOther = buildSelectOther();
+  $('.fund_container .amount_template-section .content').append(selectOther);
+  $('[name=price_84]').change(function(){
+    if ($(this).is('#price_toggle_other')) {
+      $('.price_other_wrapper').show();
+    } else {
+      $('.price_other_wrapper').hide();
+    }
+  });
 
   // hide the CiviCRM-generated price set
   $("#priceset-div").hide();
@@ -51,6 +60,42 @@ cj(function($) {
     });
 
     return params;
+  }
+
+  /**
+   * Builds the select-other widget
+   *
+   * @returns {jQuery object}
+   */
+  function buildSelectOther() {
+    return $('<div>', {class: 'price-set-row'})
+      .append($('<span>', {class: 'price-set-option-content'})
+        .append($('<input>', {
+          'data-amount': 'other',
+          id: 'price_toggle_other',
+          name: 'price_84',
+          type: 'radio',
+          value: 'other'
+        }))
+        .append($('<label>', {
+          for: 'price_toggle_other',
+          text: 'Other'
+        }))
+      )
+      .append($('<div>', {
+        class: 'price_other_wrapper',
+        style: 'display: none;'
+      })
+        .append($('<input>', {
+          keyup: function() {
+            // set the amount in the hidden field
+            var amt = $(this).val();
+            var real_field = $('select[name="fund_selector"]').val();
+            $('#priceset-div input[name=' + real_field + ']').val(amt);
+          },
+          name: 'price_other'
+        }))
+      );
   }
 
   /**
@@ -112,7 +157,7 @@ cj(function($) {
     var button = $('<span>', {
       click: handleAllocation,
       style: 'padding: 2px 4px;',
-      text: 'Add Contribution',
+      text: 'Add Contribution'
     });
 
     var span = $('<span>', {
@@ -131,12 +176,16 @@ cj(function($) {
   function handleAllocation() {
     var real_field = $('select[name="fund_selector"]').val();
     var amt = $('.amount_template-section :radio:checked').data('amount');
+    if (amt === 'other') {
+      amt = $('[name=price_other]').val();
+    }
 
     if (typeof amt === "undefined") {
       CRM.alert('Please select a gift amount', 'Error', 'error');
     } else {
       // uncheck our amount picker so it doesn't get counted twice in the total
       $('.amount_template-section :radio:checked').prop('checked', false);
+      $('[name=price_other]').val('');
 
       // set the amount in the hidden field
       $('#priceset-div input[name=' + real_field + ']').val(amt);
