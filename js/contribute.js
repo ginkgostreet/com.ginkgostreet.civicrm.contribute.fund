@@ -2,6 +2,7 @@ cj(function($) {
   // create container for our custom UI and move in the amount selector
   $("#priceset-div").before($('<div>', {class: 'fund_container'}));
   $('.fund_container').append($('.crm-section.amount_template-section'));
+  $('.crm-section.amount_template-section input[value=0]').closest('.price-set-row').hide();
 
   // hide the CiviCRM-generated price set
   $("#priceset-div").hide();

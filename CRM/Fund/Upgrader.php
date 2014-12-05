@@ -30,6 +30,7 @@ class CRM_Fund_Upgrader extends CRM_Fund_Upgrader_Base {
       'is_active' => 1,
       'is_display_amounts' => 0,
       'is_enter_qty' => 0,
+      'is_required' => 0,
       'label' => 'Amount',
       'name' => 'amount_template',
       'price_set_id' => $priceset_id,
