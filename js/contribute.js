@@ -138,7 +138,37 @@ cj(function($) {
     // whether adding or updating the row, display the gift amount
     $('table.fund_allocations tbody tr[data-id=' + real_field + '] td.amt').text(line_item.amt_label);
 
-    // TODO: call summing function
+    var total = sumAllocations();
+    var formatted = fMoney(total);
+    $('table.fund_allocations tfoot th.total').text(formatted);
+  }
+
+  /**
+   * Sums the allocations as represented in the hidden, CiviCRM-generated form. As it is this form which
+   * will be submitted to the server, this is the most accurate way to calculate the total.
+   *
+   * @returns {Number}
+   */
+  function sumAllocations() {
+    var total = 0;
+    $('table.fund_allocations tbody tr[data-id]').each(function() {
+      var real_field = $(this).attr('data-id');
+      var line_item = getRealFieldData(real_field);
+      total = Number(line_item.amt_raw) + total;
+    });
+
+    return total;
+  }
+
+  /**
+   * Formats the passed total.
+   *
+   * @param {Number} total Unformatted amount of money
+   * @returns {String} Formatted amount of money
+   */
+  function fMoney(total) {
+    // the function and global vars below are provided by CiviCRM's contribution form template
+    return symbol + formatMoney(total, 2, seperator, thousandMarker);
   }
 
   /**
