@@ -136,7 +136,7 @@ cj(function($) {
     }
 
     // whether adding or updating the row, display the gift amount
-    $('table.fund_allocations tbody tr[data-id=' + real_field + '] td.amt').text(line_item.amt_label);
+    $('table.fund_allocations tbody tr[data-id=' + real_field + '] td.amt').text(line_item.amt_formatted);
 
     var total = sumAllocations();
     var formatted = fMoney(total);
@@ -183,7 +183,7 @@ cj(function($) {
     var amt_raw = section.find('input').val();
 
     return {
-      amt_label: $('.amount_template-section :radio[data-amount=' + amt_raw + ']').siblings('label').text(),
+      amt_formatted: fMoney(amt_raw),
       'amt_raw': amt_raw,
       fund_label: section.find('label').text(),
       real_field: name
