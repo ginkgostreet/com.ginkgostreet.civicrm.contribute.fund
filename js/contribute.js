@@ -22,6 +22,12 @@ cj(function($) {
   $('.fund_container').prepend(select);
   $('.fund_container .crm-section.amount_template-section').after(button);
 
+  // prepopulate the select box with the appropriate fund if passed via the URL
+  var params = getUrlParams();
+  if (params.hasOwnProperty('fund')) {
+    select.find('option[value=price_' + params.fund + ']').attr('selected', true);
+  }
+
   // if the user submits the form with a ready-to-go allocation (but neglects to click the
   // "add" button), add/update the line-item before submitting
   $('form[name=Main]').submit(function(){
@@ -29,6 +35,23 @@ cj(function($) {
       handleAllocation();
     }
   });
+
+  /**
+   * Parses query string. Turns ?foo=bar&apples=oranges into {foo: 'bar', apples: 'oranges'}
+   *
+   * @returns {Object}
+   */
+  function getUrlParams() {
+    var qs = window.location.search.substring(1); // use substring to drop the ?
+    var pairs = qs.split('&');
+    var params = {};
+    $.each(pairs, function(){
+      var p = this.split('=');
+      params[p[0]] = p[1];
+    });
+
+    return params;
+  }
 
   /**
    * Parses the CiviCRM-generated price set to build a list of funds
