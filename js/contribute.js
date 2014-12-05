@@ -7,10 +7,19 @@ cj(function($) {
   // hide the CiviCRM-generated price set
   $("#priceset-div").hide();
 
+  // if the hidden fields are populated on page load (e.g., after a validation error) build the allocations table
+  $('#priceset-div input[name^=price_][type=text]').each(function(){
+    var field = $(this);
+    if (field.val() > 0) {
+      updateAllocationsTable(field.attr('name'));
+    }
+  });
+
   var funds = buildFundList();
   var select = buildSelectList('fund_selector', 'Select a Fund to which to Contribute', funds);
   var button = buildButton();
-  $('.fund_container').prepend(select).append(button);
+  $('.fund_container').prepend(select);
+  $('.fund_container .crm-section.amount_template-section').after(button);
 
   /**
    * Parses the CiviCRM-generated price set to build a list of funds
@@ -105,7 +114,9 @@ cj(function($) {
   }
 
   /**
-   * Updates the allocations display
+   * Updates the allocations display. This approach was taken to preserve the order
+   * in which allocations were made; were it not for this, we would build the table from
+   * scratch each time a hidden field is updated.
    *
    * @param {string} real_field The allocation to add or update
    */
