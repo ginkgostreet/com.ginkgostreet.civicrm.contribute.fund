@@ -39,10 +39,12 @@ class CRM_Fund_Upgrader extends CRM_Fund_Upgrader_Base {
     $default_amts = array(
       10000 => '$10,000',
       5000 => '$5,000',
-      1000 => '$1,000',
-      500 => '$500',
-      100 => '$100',
-      25 => '$25'
+      3600 => '$3,600',
+      1800 => '$1,800',
+      360 => '$360',
+      180 => '$180',
+      36 => '$36',
+      18 => '$18',
     );
     $params = array(
       'financial_type_id' => 1, // we don't actually use this; just need to supply a value
