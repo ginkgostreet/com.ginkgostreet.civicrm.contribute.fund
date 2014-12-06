@@ -1,26 +1,36 @@
 <?xml version="1.0"?>
 <extension key="com.ginkgostreet.civicrm.contribute.fund" type="module">
   <file>fund</file>
-  <name>FIXME</name>
-  <description>FIXME</description>
+  <name>Contribution Fund Picker</name>
+  <description>
+    This module tames University Synagogue's contribution page, which allows donors
+    to contribute to various funds. The funds are collected in a dropdown
+    list, and giving amounts are suggested to donors via a configurable price field.
+    (Donors may also enter in a different amount.) Selected funds and associated amounts
+    are displayed in a table, which the donor may edit. Admins can direct visitors to a
+    specific fund via a URL parameter (e.g., /civicrm/contribute/transact?reset=1&amp;id=8&amp;fund=50,
+    where 50 is the price field ID of the desired fund).
+  </description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>Frank J. G&#xF3;mez</author>
-    <email>frank@ginkgostreet.com</email>
+    <author>Ginkgo Street Labs</author>
+    <email>inquire@ginkgostreet.com</email>
   </maintainer>
   <urls>
-    <url desc="Main Extension Page">http://FIXME</url>
-    <url desc="Documentation">http://FIXME</url>
-    <url desc="Support">http://FIXME</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2014-12-04</releaseDate>
+  <releaseDate>2014-12-05</releaseDate>
   <version>1.0</version>
   <develStage>alpha</develStage>
   <compatibility>
-    <ver>4.2</ver>
+    <ver>4.4</ver>
   </compatibility>
-  <comments>This is a new, undeveloped module</comments>
+  <comments>
+    This module was built specifically for University Synagogue. It's possible the
+    customization could have applications for other organizations, but it's unclear
+    how much work would be required to make the extension sufficiently generic to
+    be reusable.
+  </comments>
   <civix>
     <namespace>CRM/Fund</namespace>
   </civix>
